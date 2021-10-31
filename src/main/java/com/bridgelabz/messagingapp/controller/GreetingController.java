@@ -22,30 +22,30 @@ public class GreetingController {
 	private final AtomicLong counter = new AtomicLong();
 
 	@RequestMapping(value = { "", "/", "/home" })
-	public String sayHello() {
-		return String.format(template, "World");
+	public Greeting sayHello() {
+		return  new Greeting(counter.incrementAndGet(), String.format(template, "World"));
 	}
 
 	@GetMapping("/query")
-	public String greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format(template, name);
+	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
 	
 
 	@GetMapping("/param/{name}")
-	public String greetingParam(@PathVariable String name) {
-		return String.format(template, name);
+	public Greeting greetingParam(@PathVariable String name) {
+		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
 
 	@PostMapping("/post")
-	public String greeting(@RequestBody User user) {
+	public Greeting greeting(@RequestBody User user) {
 
-		return String.format(template, user.getFirstName() + " " + user.getLastName());
+		return new Greeting(counter.incrementAndGet(), String.format(template, user.getFirstName() + " " + user.getLastName()));
 	}
 
 	@PutMapping("put/{firstName}")
-	public String greeting(@PathVariable String firstName, @RequestParam(value = "lastName") String lastName) {
+	public Greeting greeting(@PathVariable String firstName, @RequestParam(value = "lastName") String lastName) {
 
-		return String.format(template, firstName + " " + lastName);
+		return new Greeting(counter.incrementAndGet(), String.format(template, firstName + " " + lastName));
 	}
 }
