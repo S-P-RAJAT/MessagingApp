@@ -1,5 +1,6 @@
 package com.bridgelabz.messagingapp.service;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,9 @@ public class GreetingService implements IGreetingService {
 	public Greeting getGreetingById(Long id) {
 		return greetingRepository.findById(id).get();
 	}
-
+	
+	@Override
+	public List<Greeting> getGreetingsList() {
+		return greetingRepository.findAll();
+	}
 }
