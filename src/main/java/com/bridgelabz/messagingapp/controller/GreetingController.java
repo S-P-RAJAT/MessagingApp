@@ -26,10 +26,12 @@ public class GreetingController {
 	private IGreetingService greetingService;
 
 	@RequestMapping(value = { "", "/", "/home" })
-	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+	public Greeting greeting(@RequestParam(value = "firstName", defaultValue = "") String firstName,@RequestParam(value = "lastName", defaultValue = "") String lastName) {
 		User user = new User();
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
 		return new Greeting(counter.incrementAndGet(),greetingService.addGreeting(user));
-	}	
+	}
 
 	@GetMapping("/query")
 	public Greeting greetingQuery(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -49,7 +51,7 @@ public class GreetingController {
 	}
 
 	@PutMapping("put/{firstName}")
-	public Greeting greeting(@PathVariable String firstName, @RequestParam(value = "lastName") String lastName) {
+	public Greeting greetingPut(@PathVariable String firstName, @RequestParam(value = "lastName") String lastName) {
 
 		return new Greeting(counter.incrementAndGet(), String.format(template, firstName + " " + lastName));
 	}
