@@ -42,4 +42,15 @@ public class GreetingService implements IGreetingService {
 		greeting.setMessage(message);
 		return greetingRepository.save(greeting);
 	}
+	
+	@Override
+	public boolean deleteGreetingById(Long id) {
+		try {
+		greetingRepository.delete(getGreetingById(id));
+	} catch(Exception e) {
+		return false;
+	}
+		return true;
+	}
+	
 }
