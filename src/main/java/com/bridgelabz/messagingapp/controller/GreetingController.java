@@ -77,4 +77,10 @@ public class GreetingController {
 		String message = firstName + lastName;
 		return greetingService.editGreetingById(id,message);
 	}
+	
+	@GetMapping("/delete")
+	public boolean deleteGreeting() {
+		Long id = (long) 1;
+		return greetingService.deleteGreetingById(id);
+	}
 }
