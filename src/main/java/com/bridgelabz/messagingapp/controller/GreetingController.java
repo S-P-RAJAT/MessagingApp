@@ -2,6 +2,7 @@ package com.bridgelabz.messagingapp.controller;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,23 +15,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.messagingapp.model.Greeting;
 import com.bridgelabz.messagingapp.model.User;
+import com.bridgelabz.messagingapp.service.IGreetingService;
 
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
 	private static final String template = "Hello, %s!";
 	private final AtomicLong counter = new AtomicLong();
+	@Autowired
+	private IGreetingService greetingService;
 
 	@RequestMapping(value = { "", "/", "/home" })
-	public Greeting sayHello() {
-		return  new Greeting(counter.incrementAndGet(), String.format(template, "World"));
-	}
+	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+		User user = new User();
+		return new Greeting(counter.incrementAndGet(),greetingService.addGreeting(user));
+	}	
 
 	@GetMapping("/query")
-	public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
+	public Greeting greetingQuery(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
-	
 
 	@GetMapping("/param/{name}")
 	public Greeting greetingParam(@PathVariable String name) {
@@ -40,7 +44,8 @@ public class GreetingController {
 	@PostMapping("/post")
 	public Greeting greeting(@RequestBody User user) {
 
-		return new Greeting(counter.incrementAndGet(), String.format(template, user.getFirstName() + " " + user.getLastName()));
+		return new Greeting(counter.incrementAndGet(),
+				String.format(template, user.getFirstName() + " " + user.getLastName()));
 	}
 
 	@PutMapping("put/{firstName}")
@@ -48,4 +53,8 @@ public class GreetingController {
 
 		return new Greeting(counter.incrementAndGet(), String.format(template, firstName + " " + lastName));
 	}
+
+
+
+
 }
