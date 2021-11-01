@@ -68,4 +68,13 @@ public class GreetingController {
 	public List<Greeting> listGreeting() {
 		return greetingService.getGreetingsList();
 	}
+	
+	@GetMapping("/edit")
+	public Greeting editGreeting() {
+		Long id = (long) 1;
+		String firstName = "";
+		String lastName = "";
+		String message = firstName + lastName;
+		return greetingService.editGreetingById(id,message);
+	}
 }
