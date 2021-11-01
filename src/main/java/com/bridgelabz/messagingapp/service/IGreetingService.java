@@ -7,5 +7,6 @@ public interface IGreetingService {
 
 	Greeting addGreeting(User user);
 
+	Greeting getGreetingById(Long id);
 
 }

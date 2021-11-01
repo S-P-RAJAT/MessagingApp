@@ -26,7 +26,8 @@ public class GreetingController {
 	private IGreetingService greetingService;
 
 	@RequestMapping(value = { "", "/", "/home" })
-	public Greeting greeting(@RequestParam(value = "firstName", defaultValue = "") String firstName,@RequestParam(value = "lastName", defaultValue = "") String lastName) {
+	public Greeting greeting(@RequestParam(value = "firstName", defaultValue = "") String firstName,
+			@RequestParam(value = "lastName", defaultValue = "") String lastName) {
 		User user = new User();
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
@@ -56,7 +57,9 @@ public class GreetingController {
 		return new Greeting(counter.incrementAndGet(), String.format(template, firstName + " " + lastName));
 	}
 
-
-
-
+	@GetMapping("/display")
+	public Greeting greeting() {
+		Long id = (long) 1;
+		return greetingService.getGreetingById(id);
+	}
 }
