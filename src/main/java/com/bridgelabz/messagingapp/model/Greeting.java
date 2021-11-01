@@ -37,4 +37,9 @@ public class Greeting {
 		this.greetingId = greetingId;
 	}
 
+	@Override
+	public String toString() {
+		return "Greeting [greetingId=" + greetingId + ", message=" + message + "]";
+	}
+
 }

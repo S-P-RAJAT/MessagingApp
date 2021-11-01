@@ -21,6 +21,11 @@ public class GreetingService implements IGreetingService {
 
 	@Override
 	public Greeting addGreeting(User user) {
+		Greeting max= greetingRepository.findAll().stream()
+		.max((p,p1)-> Long.compare(p.getGreetingId(), p1.getGreetingId()))
+        .orElse(null);
+		if(max!=null)
+		counter.compareAndSet(0,max.getGreetingId());
 		String message = String.format(template, (user.toString().isEmpty()) ? "World" : user.toString());
 		return greetingRepository.save(new Greeting(counter.incrementAndGet(), message));
 	}
