@@ -30,7 +30,7 @@ public class GreetingController {
 		User user = new User();
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		return new Greeting(counter.incrementAndGet(),greetingService.addGreeting(user));
+		return greetingService.addGreeting(user);
 	}
 
 	@GetMapping("/query")

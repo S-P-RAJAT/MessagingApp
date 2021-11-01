@@ -5,7 +5,7 @@ import com.bridgelabz.messagingapp.model.User;
 
 public interface IGreetingService {
 
-	String addGreeting(User user);
+	Greeting addGreeting(User user);
 
 
 }
